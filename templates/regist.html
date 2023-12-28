@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/index.css">
+</head>
+<body>
+<div class="box">
+    <h1>Зарегестрироваться</h1>
+    <form action="/" id="signup">
+        <input type="text" placeholder="login" id="login">
+        <input type="email" placeholder="email" id="email">
+        <input type="password" placeholder="password" id="password">
+        <div class="buttons">
+            <button type="submit" form="signup" onclick="sendDataEmployee();">Зарeгистрироваться как работник</button>
+            <button type="submit" form="signup" onclick="sendDataEmploye()">Зарегистрироваться как работадатель</button>
+        </div>
+    </form>
+    <a href="{{url_for('login')}}">Есть аккаунт? Войдите</a>
+</div>
+<script>
+    function collectData(){
+        let login = document.getElementById('login');
+        let email = document.getElementById('email');
+        let password = document.getElementById('password');
+        return {
+            login: login,
+            email: email,
+            password: password
+        }
+    };
+    var data = collectData();
+    function sendDataEmployee(){
+      data.role = 'employee';
+      fetch('http://localhost:5000', {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: new Headers({
+              'Content-Type': 'application/json'
+          })
+        })
+    };
+     function sendDataEmploye(){
+      data.role = 'employe';
+      fetch('http://localhost:5000', {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: new Headers({
+              'Content-Type': 'application/json'
+          })
+        })
+    };
+
+</script>
+</body>
+</html>
